@@ -34,24 +34,24 @@ public class Fish {
     }
 
     public void bank() {
-
-        if (!hasEquipment()) {
+        if (hasEquipment() && Inventory.isFull()){
             Walking.walk(BankLocation.LUMBRIDGE.getCenter());
             sleep(1000, 2500);
             Bank.openClosest();
             sleep(500, 1200);
             Bank.depositAllExcept("Small fishing net");
+            sleep(500, 1200);
+            Bank.close();
+
+        } else if (!hasEquipment()) {
+            Walking.walk(BankLocation.LUMBRIDGE.getCenter());
+            sleep(1000, 2500);
+            Bank.openClosest();
+            sleep(500, 1200);
+            Bank.depositAllItems();
             sleep(500, 1200);
             Bank.withdraw("Small fishing net", 1);
             sleep(500, 1000);
-            Bank.close();
-        } else if (Inventory.isFull() && hasEquipment()) {
-            Walking.walk(BankLocation.LUMBRIDGE.getCenter());
-            sleep(1000, 2500);
-            Bank.openClosest();
-            sleep(500, 1200);
-            Bank.depositAllExcept("Small fishing net");
-            sleep(500, 1200);
             Bank.close();
         }
     }
