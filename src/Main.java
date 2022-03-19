@@ -1,3 +1,4 @@
+import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.methods.container.impl.Inventory;
 import org.dreambot.api.methods.container.impl.bank.Bank;
@@ -28,7 +29,8 @@ public class Main extends AbstractScript {
     Fish fish = new Fish();
 
     public void Chopwood() {
-        if (Inventory.isFull()) {
+        log("running chopwood method");
+        if (Inventory.isFull() || !wc.hasEquipment()) {
             wc.bank();
         } else {
             if (wc.hasEquipment()) {
@@ -42,12 +44,12 @@ public class Main extends AbstractScript {
 
     }
     public void Fish(){
+        log("Running fishing method");
         if (fish.hasEquipment() && !Inventory.isFull()){
             fish.fish();
         } else {
             fish.bank();
         }
-
     }
     public enum STATE{
         STOP, LOGOUT, FISH, WOODCUT, STEAL, BANK,
@@ -57,19 +59,8 @@ public class Main extends AbstractScript {
 
     @Override
     public int onLoop() {
-        int WTDbound = 4;
-        Random rand = new Random();
-        int WTD = rand.nextInt(WTDbound);
-        log(WTDbound);
-        if (WTD == 1){
-            Chopwood();
-        } else if (WTD == 2){
-            Fish();
-        } else if (WTD == 3){
-            sleep(267000, 545000);
-        } else if (WTD == 4){
-            log("Should do task 4");
-        }
+        Fish();
+        log("Should fish now");
         return 0;
     }
 }
