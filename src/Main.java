@@ -36,23 +36,15 @@ import static org.dreambot.api.methods.interactive.GameObjects.all;
 @ScriptManifest(name = "MultiSkiller", description = "Weird multi skiller", author = "Bulletmagnet",
         version = 0.0, category = Category.MISC, image = "")
 public class Main extends AbstractScript implements ChatListener, MouseListener {
-    int WTD;
-    long TaskTimer;
     private final Image showImage = getImage("https://pbs.twimg.com/profile_images/689269969519939584/TYr_hQdq_400x400.jpg");
     private final Image hideImage = getImage("https://pbs.twimg.com/profile_images/689269969519939584/TYr_hQdq_400x400.jpg");
-    boolean hidePaint = false;
     Rectangle rect = new Rectangle(296, 444, 200, 100);
-    Rectangle closePaint = rect;
     Rectangle openPaint = rect;
     Point p;
     Woodcut wc = new Woodcut();
     Fish fish = new Fish();
     Timer time = new Timer();
     private Timer timeRan;
-    int beginningXP;
-    int beginningLevel;
-    int currentXp;
-    int xpGained;
     private final BasicStroke stroke1 = new BasicStroke(5);
     private DrawMouseUtil drawMouseUtil = new DrawMouseUtil();
     public int TreesChopped = 0;
@@ -116,7 +108,7 @@ public class Main extends AbstractScript implements ChatListener, MouseListener 
     public long GetRandomTaskTime(){
         long randomTime;
         Random rand = new Random();
-       randomTime = rand.nextLong(3600000L, 4800000L);
+        randomTime = rand.nextLong(	2400000L, 3600000L);
         return (randomTime);
     }
 
@@ -148,7 +140,7 @@ public class Main extends AbstractScript implements ChatListener, MouseListener 
                 setDOINGTASK("FISHING");
                 setDOINGTASK("FISHING TASK 1");
                 time.setRunTime(GetRandomTaskTime());
-                while (!time.finished()) {
+                while (time.remaining() > 5L) {
                     Fish();
                     log("Time Remaning" + time.remaining());
                 }
@@ -156,23 +148,23 @@ public class Main extends AbstractScript implements ChatListener, MouseListener 
                 log("DOING TASK 2");
                 time.setRunTime(GetRandomTaskTime());
                 setDOINGTASK("CHOPPING WOOD TASK 2");
-                while (!time.finished()) {
+                while (time.remaining() > 5L) {
                     Chopwood();
                     log("Time Remaning" + time.remaining());
                 }
             } else if (TASK == 3) {
                 log("DOING TASK 3 RIGHT NOW SET TO CHOPWOOD");
-                setDOINGTASK("CHOPPING WOOD TASK 3");
+                setDOINGTASK("SLEEPING BETWEEN 10-20MIN");
                 time.setRunTime(GetRandomTaskTime());
-                while (!time.finished()) {
-                    Chopwood();
-                    log("Time Remaning" + time.remaining());
+                while (time.elapsed() <= 1200000) {
+                    Mouse.moveMouseOutsideScreen();
+                    sleep(600000, 1200000);
                 }
             } else if (TASK == 4) {
                 log("DOING TASK 4 RIGHT NOW SET TO FISH");
                 time.setRunTime(GetRandomTaskTime());
                 setDOINGTASK("FISHING TASK 4");
-                while (!time.finished()) {
+                while (time.remaining() > 5L) {
                     Fish();
                     log("Time Remaning" + time.remaining());
                 }
@@ -186,7 +178,6 @@ public class Main extends AbstractScript implements ChatListener, MouseListener 
 
     public void onPaint (Graphics2D g) {
             g.drawRect(openPaint.x, openPaint.y, openPaint.width, openPaint.height);
-            g.drawImage(this.hideImage, rect.x, rect.y, rect.width, rect.height, null);
             Polygon tile = Map.getPolygon(getLocalPlayer().getTile());
             g.drawPolygon(tile);
             timeRan = new Timer();
@@ -204,7 +195,7 @@ public class Main extends AbstractScript implements ChatListener, MouseListener 
             g.drawString("Should use Axe = : " + wc.getAxe(), 150, 400);
             g.drawString("Trees Chopped: " + TreesChopped, 150, 420);
             g.drawString("Fish Caught: " + FishCaught, 150, 430);
-            g.drawString("DOING TASK: " + getDOINGTASK(),150 ,440);
+            g.drawString("DOING TASK: " + getDOINGTASK(),35 ,440);
             drawMouseUtil.drawRandomMouse(g);
             drawMouseUtil.drawRandomMouseTrail(g);
             int i = 0;

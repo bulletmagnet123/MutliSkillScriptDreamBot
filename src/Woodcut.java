@@ -30,18 +30,17 @@ public class Woodcut {
         setAxe();
         if (hasEquipment() && !Inventory.isFull()) {
             chop();
-        } else if (Inventory.isEmpty()) {
+        } else if (!Inventory.contains(getAxe())) {
 
             Walking.walk(Bank.getClosestBankLocation());
             sleep(1000, 2500);
             Bank.openClosest();
             sleep(500, 1200);
+            Bank.depositAllItems();
+            sleep(500, 1200);
             Bank.withdraw(getAxe(), 1);
             sleep(500, 1000);
             Bank.close();
-            if (hasEquipment() && !Inventory.isFull()) {
-                chop();
-            }
         } else if (Inventory.isFull()) {
 
             Walking.walk(Bank.getClosestBankLocation());
