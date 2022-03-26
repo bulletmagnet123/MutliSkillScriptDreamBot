@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 import static org.dreambot.api.methods.interactive.GameObjects.all;
 
 @ScriptManifest(name = "MultiSkiller", description = "Weird multi skiller", author = "Bulletmagnet",
-        version = 0.0, category = Category.MISC, image = "")
+        version = 1.0, category = Category.MISC, image = "")
 public class Main extends AbstractScript implements ChatListener, MouseListener {
     private final Image showImage = getImage("https://pbs.twimg.com/profile_images/689269969519939584/TYr_hQdq_400x400.jpg");
     private final Image hideImage = getImage("https://pbs.twimg.com/profile_images/689269969519939584/TYr_hQdq_400x400.jpg");
@@ -191,7 +191,7 @@ public class Main extends AbstractScript implements ChatListener, MouseListener 
             g.drawString("Time Remaning Tell Next Task = " + ft(time.remaining()), 70, 295);
             g.drawString("WoodCutting level: " + Skills.getRealLevel(Skill.WOODCUTTING), 150, 355);
             g.drawString("Fishing Level: " + Skills.getRealLevel(Skill.FISHING), 150, 365);
-            g.drawString("Time Ran: " + timeRan.formatTime(), 150, 385);
+            g.drawString("Time Ran: " + ft(time.elapsed()), 150, 385);
             g.drawString("Should use Axe = : " + wc.getAxe(), 150, 400);
             g.drawString("Trees Chopped: " + TreesChopped, 150, 420);
             g.drawString("Fish Caught: " + FishCaught, 150, 430);
