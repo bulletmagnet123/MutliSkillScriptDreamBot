@@ -22,7 +22,10 @@ public class Fish {
                 fishingSpot.interact("Net");
                 sleep(4000, 6000);
                 Mouse.moveMouseOutsideScreen();
-                sleepUntil(() -> getLocalPlayer().getAnimation() == -1, 15000);
+                while (getLocalPlayer().isAnimating()){
+                    Mouse.moveMouseOutsideScreen();
+                    sleep(15000);
+                };
             }
         } else if (!fishArea.contains(getLocalPlayer()) && Inventory.onlyContains("Small fishing net")) {
             Walking.walk(fishArea.getRandomTile());
